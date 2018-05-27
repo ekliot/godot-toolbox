@@ -2,6 +2,8 @@ extends Node
 
 signal state_change
 
+const OP_POP = '~'
+
 onready var host = get_parent()
 var stack = []
 
@@ -9,7 +11,6 @@ var states = {}
 
 func _ready():
   for state in get_children():
-    print( state )
     states[state.ID] = state
 
 # enter a given State node
@@ -17,12 +18,9 @@ func _ready():
 func enter( state ):
   # first, handle our current state
 
-  if state == '~':
-    print( 'returning to last state' )
+  if state == OP_POP:
     leave()
     return stack.size()
-
-  print( 'entering %s ' % [ state ] )
 
   if not states.has( state ):
     return null
@@ -46,14 +44,12 @@ func enter( state ):
 
   return stack.size()
 
-# push a given State node to the stack
+# push a given State to the stack
 # this is here so that "fallback" States can be pushed preceding another State
 # returns the new size of the stack
 func push( state ):
   if not states.has( state ):
     return null
-
-  print( 'pushing on %s' % [ state ] )
 
   stack.push_front( states[state] )
   return stack.size()
@@ -64,7 +60,6 @@ func leave():
   var state = stack.pop_front()
   emit_signal( 'state_change' )
 
-  print( "leaving state %s" % [state.ID] )
   state.leave( self )
 
   if get_active():
@@ -90,7 +85,6 @@ func _process( delta ):
     var next_state = get_active()._update( self, delta )
     if next_state:
       enter( next_state )
-
 
 func _physics_process( delta ):
   if get_active():

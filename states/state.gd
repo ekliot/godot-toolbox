@@ -3,8 +3,8 @@ extends Node
 signal state_enter
 signal state_leave
 
-var ID = '_'
 var active = false
+var ID = '_'
 
 func enter( fsm ):
   _on_enter( fsm )
