@@ -1,4 +1,4 @@
-extends './state.gd'
+extends 'res://path/to/state.gd'
 
 func _init():
   ID = 'STATE_ID'
