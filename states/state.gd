@@ -22,16 +22,16 @@ func leave( fsm ):
 # OVERRIDEABLES #
 # ============= #
 
-func _update( fsm, delta ):
-  return
-
-func _physics_update( fsm, delta ):
-  return
-
 func _on_enter( fsm ):
   return
 
 func _on_leave( fsm ):
+  return
+
+func _update( fsm, delta ):
+  return
+
+func _physics_update( fsm, delta ):
   return
 
 func _parse_input( fsm, ev ):
