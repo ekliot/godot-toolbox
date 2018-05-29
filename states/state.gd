@@ -23,22 +23,22 @@ func leave( fsm ):
 # ============= #
 
 func _on_enter( fsm ):
-  return
+  return null
 
 func _on_leave( fsm ):
-  return
+  return null
 
 func _update( fsm, delta ):
-  return
+  return null
 
 func _physics_update( fsm, delta ):
-  return
+  return null
 
 func _parse_input( fsm, ev ):
-  return
+  return null
 
 func _parse_unhandled_input( fsm, ev ):
-  return
+  return null
 
 func _on_animation_finished( fsm, ani_name ):
-  return
+  return null
