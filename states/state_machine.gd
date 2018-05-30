@@ -5,18 +5,20 @@ signal state_change
 const OP_POP = '~'
 
 onready var host = get_parent()
+var states = {}
 var stack = []
 
-var states = {}
+var state_data = {}
 
 func _ready():
   for state in get_children():
     states[state.ID] = state
+    state_data[state.ID] = {}
 
 # enter a given State node
 # returns the new size of the stack
 func enter( state ):
-  # first, handle our current state
+  # first, handle our current states
 
   if state == OP_POP:
     leave()
@@ -37,6 +39,7 @@ func enter( state ):
       cur_state.leave( self )
 
   # then, switch over to the next state
+
   push( state )
   emit_signal( 'state_change' )
 
@@ -108,3 +111,16 @@ func clear( remaining=0 ):
     cleared.push( state )
 
   return cleared
+
+func get_state_data( id ):
+  if state_data.has( id ):
+    return state_data[id]
+
+  return null
+
+func set_state_data( id, data ):
+  if state_date.has( id ):
+    state_data[id] = data
+    return true
+
+  return false
