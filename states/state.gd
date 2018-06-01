@@ -6,13 +6,16 @@ signal state_leave
 var active = false
 var ID = '_'
 
-func enter( fsm ):
-  _on_enter( fsm )
+func enter( fsm, last_state=null ):
+  print( 'entering ', ID, ' from ', last_state )
+
+  _on_enter( fsm, last_state )
   if not active:
     emit_signal( 'state_enter' )
     active = true
 
 func leave( fsm ):
+  print( 'leaving ', ID )
   _on_leave( fsm )
   if active:
     emit_signal( 'state_leave' )
@@ -22,7 +25,7 @@ func leave( fsm ):
 # OVERRIDEABLES #
 # ============= #
 
-func _on_enter( fsm ):
+func _on_enter( fsm, last_state ):
   return null
 
 func _on_leave( fsm ):
@@ -42,3 +45,13 @@ func _parse_unhandled_input( fsm, ev ):
 
 func _on_animation_finished( fsm, ani_name ):
   return null
+
+# ====== #
+# GETSET #
+# ====== #
+
+func get_id():
+  return ID
+
+func get_active():
+  return active
