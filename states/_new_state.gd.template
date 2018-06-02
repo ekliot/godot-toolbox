@@ -3,8 +3,8 @@ extends 'res://path/to/state.gd'
 func _init():
   ID = 'STATE_ID'
 
-func _on_enter( fsm ):
-  return ._on_enter( fsm )
+func _on_enter( fsm, last_state=null, state_data={} ):
+  return ._on_enter( fsm, last_state )
 
 func _on_leave( fsm ):
   return ._on_leave( fsm )

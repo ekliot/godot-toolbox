@@ -1,3 +1,5 @@
+# state.gd
+
 extends Node
 
 signal state_enter
@@ -6,16 +8,15 @@ signal state_leave
 var active = false
 var ID = '_'
 
-func enter( fsm, last_state=null ):
-  print( 'entering ', ID, ' from ', last_state )
-
-  _on_enter( fsm, last_state )
+func enter( fsm, last_state=null, state_data={} ):
+  print( '  state.gd // entering ', ID, ' from ', last_state )
+  _on_enter( fsm, last_state, state_data )
   if not active:
     emit_signal( 'state_enter' )
     active = true
 
 func leave( fsm ):
-  print( 'leaving ', ID )
+  # print( '  state.gd // leaving ', ID )
   _on_leave( fsm )
   if active:
     emit_signal( 'state_leave' )
@@ -25,7 +26,7 @@ func leave( fsm ):
 # OVERRIDEABLES #
 # ============= #
 
-func _on_enter( fsm, last_state ):
+func _on_enter( fsm, last_state=null, state_data={} ):
   return null
 
 func _on_leave( fsm ):

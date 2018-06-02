@@ -1,3 +1,5 @@
+# state_machine.gd
+
 extends Node
 
 # emitted after the stack changes, and the previous state
@@ -22,7 +24,7 @@ func start( start_state ):
 
   START_STATE = start_state
   active = states[start_state]
-  active.enter( self )
+  active.enter( self, null, get_state_data( START_STATE ) )
 
 # enter a given State node
 func enter( state_to ):
@@ -35,7 +37,7 @@ func enter( state_to ):
     # if we're already in this state...
     if state_from == state_to:
       # tell it to enter itself but don't modify the stack
-      return state_from.enter( self )
+      return states[state_from].enter( self, null, get_state_data( state_from ) )
     else:
       # otherwise, tell it to leave (deactivate)
       get_state( state_from ).leave( self )
@@ -43,7 +45,7 @@ func enter( state_to ):
   # then, switch over to the next state
   emit_signal( 'state_change', state_from, state_to )
   active = states[state_to]
-  return get_active().enter( self, state_from )
+  return get_active().enter( self, state_from, get_state_data( state_to ) )
 
 # handle input
 func _input( ev ):
