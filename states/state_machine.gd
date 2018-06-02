@@ -67,7 +67,6 @@ func _process( delta ):
 func _physics_process( delta ):
   if get_active():
     var next_state = get_active()._physics_update( self, delta )
-    print( next_state )
     if next_state:
       enter( next_state )
 
