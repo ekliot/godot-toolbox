@@ -17,8 +17,8 @@ func _ready():
     state_data[state.ID] = {}
 
 func start( start_state ):
-  if not states.has( state_to ):
-    return 1 / 0
+  if not states.has( start_state ):
+    return null
 
   START_STATE = start_state
   active = states[start_state]
@@ -30,20 +30,20 @@ func enter( state_to ):
     return null
 
   # first, handle our current states
-  var state_from = get_active().get_id()
+  var state_from = get_active_id()
   if state_from:
     # if we're already in this state...
     if state_from == state_to:
       # tell it to enter itself but don't modify the stack
-      return cur_state.enter( self )
+      return state_from.enter( self )
     else:
       # otherwise, tell it to leave (deactivate)
-      cur_state.leave( self )
+      get_state( state_from ).leave( self )
 
   # then, switch over to the next state
   emit_signal( 'state_change', state_from, state_to )
-  active = state_to
-  return states[state_to].enter( self, state_from )
+  active = states[state_to]
+  return get_active().enter( self, state_from )
 
 # handle input
 func _input( ev ):
@@ -67,6 +67,7 @@ func _process( delta ):
 func _physics_process( delta ):
   if get_active():
     var next_state = get_active()._physics_update( self, delta )
+    print( next_state )
     if next_state:
       enter( next_state )
 
@@ -76,6 +77,11 @@ func get_active():
 func get_active_id():
   if active:
     return active.get_id()
+  return null
+
+func get_state( id ):
+  if states.has( id ):
+    return states[id]
   return null
 
 func get_state_data( id ):
