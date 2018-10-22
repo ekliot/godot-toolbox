@@ -7,17 +7,18 @@ extends Node
 signal state_enter
 signal state_leave
 
+onready var FSM = get_parent() setget ,get_fsm
 var ID = '_' setget ,get_state_id
 var active = false setget ,is_active
 
-func enter(fsm, last_state=null, state_data={}):
-  _on_enter(fsm, last_state, state_data)
+func enter(last_state=null, state_data={}):
+  _on_enter(last_state, state_data)
   if not active:
     emit_signal('state_enter')
     active = true
 
-func leave(fsm):
-  _on_leave(fsm)
+func leave():
+  _on_leave()
   if active:
     emit_signal('state_leave')
     active = false
@@ -28,7 +29,7 @@ func leave(fsm):
     Almost all of these are called by the StateMachine host
 """
 
-func _on_enter(fsm, state_data={}, last_state=null):
+func _on_enter(state_data={}, last_state=null):
   """
   Logic to execute when entering the state
   Returns the state ID of the next state to change to, or null if no change needed
@@ -38,7 +39,7 @@ func _on_enter(fsm, state_data={}, last_state=null):
   """
   return null
 
-func _on_leave(fsm):
+func _on_leave():
   """
   Logic to execute when leaving the state
   Returns the state ID of the next state to change to, or null if no change needed
@@ -46,7 +47,7 @@ func _on_leave(fsm):
   """
   return null
 
-func _update(fsm, delta):
+func _update(delta):
   """
   A wrapper for Node._process(), called by the StateMachine host only when this State is active
   Returns the state ID of the next state to change to, or null if no change needed
@@ -55,7 +56,7 @@ func _update(fsm, delta):
   """
   return null
 
-func _physics_update(fsm, delta):
+func _physics_update(delta):
   """
   A wrapper for Node._physics_process(), called by the StateMachine host only when this State is active
   Returns the state ID of the next state to change to, or null if no change needed
@@ -64,7 +65,7 @@ func _physics_update(fsm, delta):
   """
   return null
 
-func _parse_input(fsm, ev):
+func _parse_input(ev):
   """
   A wrapper for Node._input(), called by the StateMachine host only when this State is active
   Returns the state ID of the next state to change to, or null if no change needed
@@ -73,7 +74,7 @@ func _parse_input(fsm, ev):
   """
   return null
 
-func _parse_unhandled_input(fsm, ev):
+func _parse_unhandled_input(ev):
   """
   A wrapper for Node._unhandled_input(), called by the StateMachine host only when this State is active
   Returns the state ID of the next state to change to, or null if no change needed
@@ -82,12 +83,15 @@ func _parse_unhandled_input(fsm, ev):
   """
   return null
 
-func _on_animation_finished(fsm, ani_name):
+func _on_animation_finished(ani_name):
   return null
 
 """
 === GETTERS
 """
+
+func get_fsm():
+  return FSM
 
 func get_state_id():
   return ID

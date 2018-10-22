@@ -3,23 +3,23 @@ extends 'res://path/to/state.gd'
 func _init():
   ID = 'STATE_ID'
 
-func _on_enter( fsm, last_state=null, state_data={} ):
-  return ._on_enter( fsm, last_state )
+func _on_enter(last_state=null, state_data={}):
+  return ._on_enter(last_state)
 
-func _on_leave( fsm ):
-  return ._on_leave( fsm )
+func _on_leave():
+  return ._on_leave()
 
-func _update( fsm, delta ):
-  return ._update( fsm, delta )
+func _update(delta):
+  return ._update(delta)
 
-func _physics_update( fsm, delta ):
-  return ._physics_update( fsm, delta )
+func _physics_update(delta):
+  return ._physics_update(delta)
 
-func _parse_input( fsm, ev ):
-  return ._parse_input( fsm, ev )
+func _parse_input(ev):
+  return ._parse_input(ev)
 
-func _parse_unhandled_input( fsm, ev ):
-  return ._parse_unhandled_input( fsm, ev )
+func _parse_unhandled_input(ev):
+  return ._parse_unhandled_input(ev)
 
-func _on_animation_finished( fsm, ani_name ):
-  return ._on_animation_finished( fsm, ani_name )
+func _on_animation_finished(ani_name):
+  return ._on_animation_finished(ani_name)
