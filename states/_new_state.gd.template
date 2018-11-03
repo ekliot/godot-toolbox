@@ -23,3 +23,6 @@ func _parse_unhandled_input(ev):
 
 func _on_animation_finished(ani_name):
   return ._on_animation_finished(ani_name)
+
+func set_host(host):
+  pass

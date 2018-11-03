@@ -8,7 +8,7 @@ signal state_enter
 signal state_leave
 
 onready var FSM = get_parent() setget ,get_fsm
-var ID = '_' setget ,get_state_id
+onready var ID = gen_state_id() setget ,get_state_id
 var active = false setget ,is_active
 
 func enter(last_state=null, state_data={}):
@@ -22,6 +22,10 @@ func leave():
   if active:
     emit_signal('state_leave')
     active = false
+
+func gen_state_id():
+  # TODO host.name + self.name ?
+  return self.name.to_lower()
 
 """
 === OVERRIDEABLES

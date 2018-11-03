@@ -4,8 +4,6 @@ filename: state_machine.gd
 
 extends Node
 
-# utility signal, for States that want to connect to the FSM host
-signal ready
 # emitted after the previous state is left, but before the next state is entered
 signal state_change(state_from, state_to)
 
@@ -16,12 +14,15 @@ var active = null setget ,get_active_state
 var states = {}
 var state_data = {}
 
+
 func _ready():
   for state in get_children():
     if state.has_method('get_state_id'):
       states[state.ID] = state
       state_data[state.ID] = {}
-  emit_signal('ready')
+    if state.has_method('set_host'):
+      state.set_host(self.HOST)
+
 
 """
 === CORE METHODS
@@ -57,6 +58,7 @@ func enter(state_to):
   var new_state = states[state_to]
   active = new_state
   return new_state.enter(get_state_data(state_to), state_from)
+
 
 """
 === STATE WRAPPERS
@@ -99,6 +101,7 @@ func _physics_process(delta):
     var next_state = get_active_state()._physics_update(delta)
     if next_state:
       enter(next_state)
+
 
 """
 === GETTERS
