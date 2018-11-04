@@ -1,10 +1,7 @@
 extends 'res://path/to/state.gd'
 
-func _init():
-  ID = 'STATE_ID'
-
-func _on_enter(last_state=null, state_data={}):
-  return ._on_enter(last_state)
+func _on_enter(state_data={}, last_state=null):
+  return ._on_enter(state_data, last_state)
 
 func _on_leave():
   return ._on_leave()

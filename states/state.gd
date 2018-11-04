@@ -11,8 +11,8 @@ onready var FSM = get_parent() setget ,get_fsm
 onready var ID = gen_state_id() setget ,get_state_id
 var active = false setget ,is_active
 
-func enter(last_state=null, state_data={}):
-  _on_enter(last_state, state_data)
+func enter(state_data={}, last_state=null):
+  _on_enter(state_data, last_state)
   if not active:
     emit_signal('state_enter')
     active = true
