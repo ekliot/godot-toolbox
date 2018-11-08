@@ -70,8 +70,8 @@ func _input(ev):
   """
   handle input based on the currently active state
   """
-  if get_active_state():
-    var next_state = get_active_state()._parse_input(ev)
+  if active:
+    var next_state = active._parse_input(ev)
     if next_state:
       enter(next_state)
 
@@ -79,8 +79,8 @@ func _unhandled_input(ev):
   """
   handle input based on the currently active state
   """
-  if get_active_state():
-    var next_state = get_active_state()._parse_unhandled_input(ev)
+  if active:
+    var next_state = active._parse_unhandled_input(ev)
     if next_state:
       enter(next_state)
 
@@ -88,8 +88,8 @@ func _process(delta):
   """
   handle game loop based on currently active state
   """
-  if get_active_state():
-    var next_state = get_active_state()._update(delta)
+  if active:
+    var next_state = active._update(delta)
     if next_state:
       enter(next_state)
 
@@ -97,8 +97,8 @@ func _physics_process(delta):
   """
   handle game physics loop based on currently active state
   """
-  if get_active_state():
-    var next_state = get_active_state()._physics_update(delta)
+  if active:
+    var next_state = active._physics_update(delta)
     if next_state:
       enter(next_state)
 
@@ -127,5 +127,6 @@ func get_state_data(id):
 
 func set_state_data(id, data):
   if id in state_data:
-    state_data[id] = data
+    for k in data.keys():
+      state_data[id][k] = data[k]
   return id in state_data

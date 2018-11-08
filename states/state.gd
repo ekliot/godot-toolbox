@@ -9,6 +9,7 @@ signal state_leave
 
 onready var FSM = get_parent() setget ,get_fsm
 onready var ID = gen_state_id() setget ,get_state_id
+
 var active = false setget ,is_active
 
 func enter(state_data={}, last_state=null):
