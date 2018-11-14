@@ -6,7 +6,7 @@ const LVL_PAD = 5
 
 const FMT_PREFIX = "%*s"
 const FMT_LEVEL = "[%s]"
-const FMT_MSG = "%16s <%8s> %8s // %s"
+const FMT_MSG = "%24s <%8s> %8s // %s"
 
 # TODO set this somewhere/somehow
 # TODO interpret these somewhere/somehow
