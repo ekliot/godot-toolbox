@@ -28,6 +28,7 @@ func gen_state_id():
   # TODO host.name + self.name ?
   return self.name.to_lower()
 
+
 """
 === OVERRIDEABLES
     These are methods that extending classes are meant to override
@@ -52,7 +53,7 @@ func _on_leave():
   """
   return null
 
-func _update(delta):
+func _on_process(delta):
   """
   A wrapper for Node._process(), called by the StateMachine host only when this State is active
   Returns the state ID of the next state to change to, or null if no change needed
@@ -61,7 +62,7 @@ func _update(delta):
   """
   return null
 
-func _physics_update(delta):
+func _on_physics_process(delta):
   """
   A wrapper for Node._physics_process(), called by the StateMachine host only when this State is active
   Returns the state ID of the next state to change to, or null if no change needed
@@ -70,7 +71,7 @@ func _physics_update(delta):
   """
   return null
 
-func _parse_input(ev):
+func _on_input(ev):
   """
   A wrapper for Node._input(), called by the StateMachine host only when this State is active
   Returns the state ID of the next state to change to, or null if no change needed
@@ -79,7 +80,7 @@ func _parse_input(ev):
   """
   return null
 
-func _parse_unhandled_input(ev):
+func _on_unhandled_input(ev):
   """
   A wrapper for Node._unhandled_input(), called by the StateMachine host only when this State is active
   Returns the state ID of the next state to change to, or null if no change needed
@@ -90,6 +91,7 @@ func _parse_unhandled_input(ev):
 
 func _on_animation_finished(ani_name):
   return null
+
 
 """
 === GETTERS
