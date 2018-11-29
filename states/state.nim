@@ -4,8 +4,8 @@ A State class for use with the StateMachine
 
 import
   godot, input
-import state_machine
 
+import state_machine
 
 gdobj State of Node:
   var FSM*: StateMachine = nil

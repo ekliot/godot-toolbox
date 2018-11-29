@@ -4,6 +4,7 @@ A StateMachine class
 
 import
   godot, input
+
 import state
 
 gdobj StateMachine of Node:
@@ -23,7 +24,7 @@ gdobj StateMachine of Node:
     for state in get_children():
       if state of State:
         states[state.ID] = (state as State)
-        state_data[state.ID] = {}
+        state_data[state.ID] = new_dictionary()
         if state.has_method("set_host"):
           state.set_host(self.HOST)
 
