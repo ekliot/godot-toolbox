@@ -1,11 +1,31 @@
-import strutils
 import
-  godot, node, input
+  godot, node #, input
 
+type
+  StateMachine* = ref object of Node
+  State* = ref object of Node
+
+# proc to_variant*(self: State): Variant {.inline.} =
+#   if is_nil self:
+#     new_variant()
+#   else:
+#     new_variant(self.godotObject)
+# proc from_variant*(self: var State, val: Variant): ConversionResult =
+#   self = val as_object State
+
+# proc to_variant*(self: StateMachine): Variant {.inline.} =
+#   if is_nil self:
+#     new_variant()
+#   else:
+#     new_variant(self.godotObject)
+# proc from_variant*(self: var StateMachine, val: Variant): ConversionResult
+#   self = val as_object StateMachine
+
+##[
 # NIMIFY does this... break things?
 # yes, yes it does
 type
-  StateMachine = Node
+  StateMachine = ref Node
 
 gdobj State of Node:
   var FSM*: StateMachine = nil
@@ -119,8 +139,9 @@ gdobj StateMachine of Node:
   method ready*() =
     self.HOST = get_parent() as Node
 
-    for state in get_children():
-      if state of State:
+    for child in get_children():
+      state = child as State
+      if not is_nil(state):
         states[state.id] = state
         state_data[state.id] = new_dictionary()
         if state.has_method("set_host"):
@@ -225,3 +246,4 @@ gdobj StateMachine of Node:
     if result:
       for k in data.keys():
         state_data[id][k] = data[k]
+]##

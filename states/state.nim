@@ -2,10 +2,12 @@
 A State class for use with the StateMachine
 ]##
 
+import strutils
 import
-  godot, input
+  godot, node, input
+# import state_machine
+import states
 
-import state_machine
 
 gdobj State of Node:
   var FSM*: StateMachine = nil
@@ -17,21 +19,21 @@ gdobj State of Node:
     add_user_signal("state_enter")
     add_user_signal("state_leave")
 
-  proc gen_state_id() =
+  proc gen_state_id(): string =
     # TODO host.name + self.name ?
     result = self.name.to_lower()
 
   method ready*() =
-    self.FSM = get_parent()
+    self.FSM = get_parent() as StateMachine
     self.ID = gen_state_id()
 
-  proc enter*(state_data = new_dictionary(), last_state: string = nil): void =
+  proc enter*(state_data = new_dictionary(), last_state = ""): void {.gdExport.} =
     on_enter(state_data, last_state)
     if not self.active:
       emit_signal("state_enter")
       self.active = true
 
-  proc leave*(): void =
+  proc leave*(): void {.gdExport.} =
     on_leave()
     if self.active:
       emit_signal("state_leave")
@@ -43,7 +45,10 @@ gdobj State of Node:
       Almost all of these are called by the StateMachine host
   ]##
 
-  method on_enter*(state_data = new_dictionary(), last_state: string = nil): void =
+  proc set_host*(host: Node): void {.gdExport.} =
+    discard
+
+  method on_enter*(state_data: Dictionary, last_state: string): void =
     ##[
       Logic to execute when entering the state
       Returns the state ID of the next state to change to, or nil if no change needed
@@ -68,7 +73,7 @@ gdobj State of Node:
       fsm :- the StateMachine host
       delta :- delta time provided by Node._process()
     ]##
-    result = nil
+    result = ""
 
   method on_physics_process*(delta: float): string =
     ##[
@@ -77,7 +82,7 @@ gdobj State of Node:
       fsm :- the StateMachine host
       delta :- delta time provided by Node._process()
     ]##
-    result = nil
+    result = ""
 
   method on_input*(ev: InputEvent): string =
     ##[
@@ -86,7 +91,7 @@ gdobj State of Node:
       fsm :- the StateMachine host
       ev :- input event provided by Node._input()
     ]##
-    result = nil
+    result = ""
 
   method on_unhandled_input*(ev: InputEvent): string =
     ##[
@@ -95,7 +100,7 @@ gdobj State of Node:
       fsm :- the StateMachine host
       ev :- input event provided by Node._unhandled_input()
     ]##
-    result = nil
+    result = ""
 
   method on_animation_finished*(ani_name: string): string =
-    result = nil
+    result = ""
