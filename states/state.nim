@@ -5,7 +5,6 @@ A State class for use with the StateMachine
 import strutils
 import
   godot, node, input
-# import state_machine
 import states
 
 
@@ -21,7 +20,7 @@ gdobj State of Node:
 
   proc gen_state_id(): string =
     # TODO host.name + self.name ?
-    result = self.name.to_lower()
+    self.name.to_lower()
 
   method ready*() =
     self.FSM = get_parent() as StateMachine
@@ -73,7 +72,7 @@ gdobj State of Node:
       fsm :- the StateMachine host
       delta :- delta time provided by Node._process()
     ]##
-    result = ""
+    ""
 
   method on_physics_process*(delta: float): string =
     ##[
@@ -82,7 +81,7 @@ gdobj State of Node:
       fsm :- the StateMachine host
       delta :- delta time provided by Node._process()
     ]##
-    result = ""
+    ""
 
   method on_input*(ev: InputEvent): string =
     ##[
@@ -91,7 +90,7 @@ gdobj State of Node:
       fsm :- the StateMachine host
       ev :- input event provided by Node._input()
     ]##
-    result = ""
+    ""
 
   method on_unhandled_input*(ev: InputEvent): string =
     ##[
@@ -100,7 +99,10 @@ gdobj State of Node:
       fsm :- the StateMachine host
       ev :- input event provided by Node._unhandled_input()
     ]##
-    result = ""
+    ""
 
   method on_animation_finished*(ani_name: string): string =
-    result = ""
+    ""
+
+  proc `$`*(): string =
+    self.ID

@@ -136,12 +136,10 @@ gdobj StateMachine of Node:
     return to_variant(id) in states.keys
 
   proc get_state*(id: string): State {.gdExport.} =
-    if has_state(id):
-      result = as_object[State](states[id])
+    if has_state(id): as_object[State](states[id]) else: nil
 
   proc get_state_data*(id: string): Dictionary {.gdExport.} =
-    if has_state(id):
-      result = as_dictionary state_data[id]
+    if has_state(id): as_dictionary state_data[id] else: nil
 
   proc set_state_data*(id: string, data: Dictionary): void {.gdExport.} =
     if has_state(id):
