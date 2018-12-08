@@ -6,17 +6,17 @@ func _on_enter(state_data={}, last_state=null):
 func _on_leave():
   return ._on_leave()
 
-func _update(delta):
-  return ._update(delta)
+func _on_process(delta):
+  return ._on_process(delta)
 
-func _physics_update(delta):
-  return ._physics_update(delta)
+func _on_physics_process(delta):
+  return ._on_physics_process(delta)
 
-func _parse_input(ev):
-  return ._parse_input(ev)
+func _on_input(ev):
+  return ._on_input(ev)
 
-func _parse_unhandled_input(ev):
-  return ._parse_unhandled_input(ev)
+func _on_unhandled_input(ev):
+  return ._on_unhandled_input(ev)
 
 func _on_animation_finished(ani_name):
   return ._on_animation_finished(ani_name)

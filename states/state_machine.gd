@@ -4,6 +4,8 @@ filename: state_machine.gd
 
 extends Node
 
+const State = preload("./state.gd")
+
 # emitted after the previous state is left, but before the next state is entered
 signal state_change(state_from, state_to)
 
@@ -17,11 +19,11 @@ var state_data = {}
 
 func _ready():
   for state in get_children():
-    if state.has_method('get_state_id'):
+    if state is State:
       states[state.ID] = state
       state_data[state.ID] = {}
-    if state.has_method('set_host'):
-      state.set_host(self.HOST)
+      if state.has_method('set_host'):
+        state.set_host(self.HOST)
 
 
 """
